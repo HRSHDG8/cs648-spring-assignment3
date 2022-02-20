@@ -6,7 +6,7 @@ const productCategories = [
     {id: 4, name: 'Sweaters'},
     {id: 5, name: 'Accessories'}
 ]
-const NO_DATA = 'No Data Available';
+const NO_DATA = 'No Data';
 
 const ProductTableRow = ({product}) => {
     const {name, price, category, imageUrl} = product;
@@ -129,9 +129,6 @@ async function graphQLFetch(query, variables = {}) {
     }
 }
 
-/**
- * Entry Point of our Application. Renders the whole page from here.
- */
 class ProductList extends React.Component {
     constructor() {
         super();
@@ -140,10 +137,10 @@ class ProductList extends React.Component {
     }
 
     componentDidMount() {
-        this.loadData();
+        this.fetchProductList();
     }
 
-    async loadData() {
+    async fetchProductList() {
         const query = `
             query {
                 productList {
@@ -174,7 +171,7 @@ class ProductList extends React.Component {
 
         const data = await graphQLFetch(query, {product});
         if (data) {
-            this.loadData();
+            this.fetchProductList();
         }
     }
 
